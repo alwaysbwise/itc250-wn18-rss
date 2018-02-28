@@ -12,7 +12,7 @@
  * @version 0.1 2018/02/08
  * @link http://www.brianwise.xyz/wn18
  * @license https://www.apache.org/licenses/LICENSE-2.0
- * @see survey_view.php
+ * @see feed_view.php
  * @see Pager.php 
  * @todo plug RSS feeds into SQL calls
  */
@@ -21,16 +21,10 @@
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials 
  
 # SQL statement
-//$sql = "select MuffinName, MuffinID, Price from test_Muffins";
-  $sql = 
-"
-select CONCAT(a.FirstName, ' ', a.LastName) AdminName, s.SurveyID, s.Title, s.Description, 
-date_format(s.DateAdded, '%W %D %M %Y %H:%i') 'DateAdded' from "
-. PREFIX . "surveys s, " . PREFIX . "Admin a where s.AdminID=a.AdminID order by s.DateAdded desc
-";
+$sql= 'select * from wn18_RSS_Feeds where CategoryID = ' . $id;
 
 #Fills <title> tag. If left empty will default to $PageTitle in config_inc.php  
-$config->titleTag = 'Surveys made with love & PHP in Seattle';
+$config->titleTag = 'News Feeds made with love & PHP in Seattle';
 
 #Fills <meta> tags.  Currently we're adding to the existing meta tags in config_inc.php
 $config->metaDescription = 'Seattle Central\'s ITC250 Class News Feeds are made with pure PHP! ' . $config->metaDescription;
@@ -39,12 +33,11 @@ $config->metaKeywords = 'RSS,PHP,Fun,News,Big Data,Regular Expressions,'. $confi
 //adds font awesome icons for arrows on pager
 $config->loadhead .= '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
 
-
 # END CONFIG AREA ---------------------------------------------------------- 
 
 get_header(); #defaults to theme header or header_inc.php
 ?>
-<h3 align="center">Surveys</h3>
+<h3 align="center">Feeds</h3>
 
 <?php
 #reference images for pager
@@ -64,15 +57,14 @@ $result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::
 
 if(mysqli_num_rows($result) > 0)
 {#records exist - process
-	if($myPager->showTotal()==1){$itemz = "survey";}else{$itemz = "surveys";}  //deal with plural
+	if($myPager->showTotal()==1){$itemz = "feed";}else{$itemz = "feeds";}  //deal with plural
     echo '<div align="center">We have ' . $myPager->showTotal() . ' ' . $itemz . '!</div>';
     echo '
     <table class="table table-hover">
     <thead>
         <tr>
           <th scope="col">Title</th>
-          <th scope="col">Creator</th>
-          <th scope="col">Date Created </th>
+          <th scope="col">Description</th>
         </tr>
     </thead>
     <tbody>
@@ -81,14 +73,10 @@ if(mysqli_num_rows($result) > 0)
 	{# process each row
         echo '
             <tr>
-              <td><a href="' . VIRTUAL_PATH . 'surveys/survey_view.php?id=' . (int)$row['SurveyID'] . '">' . dbOut($row['Title']) . '</a></td>
-              <td>'. dbOut($row['AdminName']) . '</td>
-              <td>'. dbOut($row['DateAdded']) . '</td>
+              <td><a href="' . VIRTUAL_PATH . 'feeds/feed_view.php?id=' . (int)$row['CategoryID'] . '">' . dbOut($row['Category']) . '</a></td>
+              <td>'. dbOut($row['Description']) . '</td>
             </tr>
         ';
-        
-        
-        // echo '<div align="center"><a href="' . VIRTUAL_PATH . 'surveys/survey_view.php?id=' . (int)$row['SurveyID'] . '">' . dbOut($row['Title']) . '</a>' . '</div>';
 	}
     echo '
          </tbody>
@@ -96,7 +84,7 @@ if(mysqli_num_rows($result) > 0)
     ';
 	echo $myPager->showNAV(); # show paging nav, only if enough records	 
 }else{#no records
-    echo "<div align=center>There are currently no surveys.</div>";	
+    echo "<div align=center>There are currently no feeds.</div>";	
 }
 @mysqli_free_result($result);
 

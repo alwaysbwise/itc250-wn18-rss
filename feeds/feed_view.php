@@ -1,19 +1,13 @@
 <?php
 /**
- * survey_view.php is a page to demonstrate the proof of concept of the 
- * initial SurveySez objects.
- *
- * Objects in this version are the Survey, Question & Answer objects
+ * feed_view.php is a page to display the subcategories from their
+ * respective parents and link to specific RSS feeds
  * 
- * @package SurveySez
- * @author William Newman
- * @version 2.12 2015/06/04
- * @link http://newmanix.com/ 
+ * @package RSS Feeds
+ * @author Brian Wise <briandwise7@gmail.com> Ana, Ben, Sue
+ * @version 0.1 2018/02/08
+ * @link http://www.brianwise.xyz/wn18
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @see Question.php
- * @see Answer.php
- * @see Response.php
- * @see Choice.php
  */
  
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
@@ -24,9 +18,9 @@ $config->metaRobots = 'no index, no follow';#never index survey pages
 if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystring
 	 $myID = (int)$_GET['id']; #Convert to integer, will equate to zero if fails
 }else{
-	myRedirect(VIRTUAL_PATH . "surveys/index.php");
+	myRedirect(VIRTUAL_PATH . "feeds/index.php");
 }
-
+//do we need a feed class? can we just use the $_GET with id to generate a sql ? 
 $mySurvey = new SurveySez\Survey($myID); //MY_Survey extends survey class so methods can be added
 if($mySurvey->isValid)
 {
