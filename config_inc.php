@@ -73,12 +73,12 @@ include INCLUDE_PATH . 'MyAutoLoader.php'; #Allows multiple versions of AutoLoad
 # CONTENT CONFIGURATION AREA (theme, content areas & nav arrays for header/footer )-----------------------------------------
 $config->theme = 'Bootswatch'; #default theme (header/footer combo) see 'Themes' folder for others and info
 $config->style = 'cyborg.css'; #currently only Bootswatch Theme uses style to switch look & feel
-$config->slogan = 'Cotlets are Awesome!';
-$config->metaDescription = 'Welcome to the Cotlets website.  We split off from Applets.  But We are better.';
-$config->metaKeywords = 'Cotlets,Apricots,Turkish Delight,database,mysql,php';
+$config->slogan = 'Serving Surveys & News!';
+$config->metaDescription = 'Welcome to the News & Q\'s website.';
+$config->metaKeywords = 'news,surveys,database,mysql,php,javascript';
 $config->metaRobots = 'no index, no follow';
-$config->banner = 'My Cotlet Banner'; #goes inside header - can be overwritten
-$config->copyright = 'Cotlets, Not Applets, &copy; 2014 - ' . date('Y'); #goes inside footer - can be overwritten
+$config->banner = 'News & Q\'s: Surveys & News'; #goes inside header - can be overwritten
+$config->copyright = 'News & Q\'s - &copy; 2014 - ' . date('Y'); #goes inside footer - can be overwritten
 
 $config->sidebar1 = '
 <h3 align="center">Sidebar 1</h3>
@@ -100,6 +100,7 @@ if(startSession() && isset($_SESSION['AdminID']) && $config->theme != 'Bootswatc
 $nav1['index.php'] = "Home~A model for building largely static web pages";
 $nav1['surveys/'] = "Surveys~The entrance to our Survey App";
 $nav1['feeds/'] = "Feeds~The entrance to our Feed Aggregator App";
+$nav1['demo/BillsFoodTruck.php'] = "FoodTruck~Basic postback ordering app";
 $nav1['demo/demo_shared.php'] = "Shared~A demo page for building mysqli shared connection based applications.";
 $nav1['demo/demo_pdo.php'] = "PDO~A demo page for building PDO connection based applications.";
 $nav1['demo/demo_contact.php'] = "Contact~A demo for building postback forms";

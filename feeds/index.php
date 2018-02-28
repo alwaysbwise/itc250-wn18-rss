@@ -21,7 +21,7 @@
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials 
  
 # SQL statement
-$sql= "select * from wn18_RSS_Categories";
+$sql= "select * from " . PREFIX . "RSS_Categories";
 
 #Fills <title> tag. If left empty will default to $PageTitle in config_inc.php  
 $config->titleTag = 'News Feeds made with love & PHP in Seattle';
@@ -63,7 +63,7 @@ if(mysqli_num_rows($result) > 0)
     <table class="table table-hover">
     <thead>
         <tr>
-          <th scope="col">Title</th>
+          <th scope="col">Category</th>
           <th scope="col">Description</th>
         </tr>
     </thead>

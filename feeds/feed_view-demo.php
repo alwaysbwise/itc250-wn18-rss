@@ -55,7 +55,7 @@ if(mysqli_num_rows($result) > 0)
 	{# process each row
         echo '
             <tr>            
-              <td><a href=""</a>'. dbOut($row['SubCategory']) . '</td>
+              <td><a href="' . VIRTUAL_PATH . 'feeds/feed.php?id=' . (int)$row['FeedID'] . '">' . dbOut($row['SubCategory']) . '</a>'. dbOut($row['SubCategory']) . '</td>
               <td>'. dbOut($row['Description']) . '</td>
             </tr>
         ';
