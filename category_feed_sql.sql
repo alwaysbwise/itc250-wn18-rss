@@ -1,3 +1,11 @@
+/**
+ * @package ITC250 Project 4
+ * @author Benjamin Beal <bbeal003@seattlecentral.edu>
+ * @version 2.0 02/27/2018
+ * @link http://www.bsquaredproduction.com/
+ * @license http://opensource.org/licenses/osl-3.0.php Open Software License ("OSL") v. 3.0
+ */
+
 SET FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS wn18_RSS_Feeds;
