@@ -22,7 +22,7 @@ CREATE TABLE wn18_RSS_Feeds (
   FeedID int(10) unsigned NOT NULL AUTO_INCREMENT,
   CategoryID int(10) unsigned DEFAULT 0,
   SubCategory varchar(120) DEFAULT NULL,
-  Description text,
+  Description varchar(250),
   PRIMARY KEY (FeedID),
   FOREIGN KEY (CategoryID) REFERENCES wn18_RSS_Categories(CategoryID) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -37,30 +37,32 @@ INSERT INTO wn18_RSS_Categories (Category, Description)
 VALUES ('Sports', 'This is the description for the Sports category');
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('Jazz', 'This is the description for Jazz', 2);
+VALUES ('Jazz', 'https://news.google.com/news/rss/search/section/q/Jazz%20Music/Jazz%20Music?hl=en&gl=US&ned=us', 2);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('Rock', 'This is the description for Rock', 2);
+VALUES ('Rock', 'https://news.google.com/news/rss/search/section/q/Rock%20Music/Rock%20Music?hl=en&gl=US&ned=us', 2);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('Pop', 'This is the description for Pop', 2);
+VALUES ('Pop', 'https://news.google.com/news/rss/search/section/q/Pop%20Music/Pop%20Music?hl=en&gl=US&ned=us', 2);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('Apple', 'This is the description for Apple', 1);
+VALUES ('Apple', 'https://news.google.com/news/rss/explore/section/q/Apple/Apple?ned=us&hl=en&gl=US', 1);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('Microsoft', 'This is the description for Microsoft', 1);
+VALUES ('Microsoft', 'https://news.google.com/news/rss/search/section/q/Microsoft/Microsoft?hl=en&gl=US&ned=us', 1);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('Amazon', 'This is the description for Amazon', 1);
+VALUES ('Amazon', 'https://news.google.com/news/rss/search/section/q/Amazon/Amazon?hl=en&gl=US&ned=us', 1);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('MLB', 'This is the description for Major League Baseball', 3);
+VALUES ('MLB', 'https://news.google.com/news/rss/explore/section/q/Major%20League%20Baseball/Major%20League%20Baseball?hl=en&gl=US&ned=us', 3);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('NHL', 'This is the description for the National Hockey League', 3);
+VALUES ('NHL', 'https://news.google.com/news/rss/explore/section/q/National%20Hockey%20League/National%20Hockey%20League?hl=en&gl=US&ned=us', 3);
 
 INSERT INTO wn18_RSS_Feeds (SubCategory, Description, CategoryID)
-VALUES ('NBA', 'This is the description for the National Basketball Association', 3);
+VALUES ('NBA', 'https://news.google.com/news/rss/explore/section/q/National%20Basketball%20Association/National%20Basketball%20Association?hl=en&gl=US&ned=us', 3);
+
+
 
 SET FOREIGN_KEY_CHECKS=1;
