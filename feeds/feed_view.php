@@ -33,7 +33,7 @@ $next = '<i class="fa fa-chevron-circle-right"></i>';
 # Create instance of new 'pager' class
 $myPager = new Pager(20,'',$prev,$next,'');
 $sql = $myPager->loadSQL($sql);  #load SQL, add offset
-
+//$sqlRSS = "select Description from wn18_RSS_Feeds where FeedID=" . $feedID;
 # connection comes first in mysqli (improved) function
 $result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::conn()), E_USER_ERROR));
 
@@ -55,7 +55,9 @@ if(mysqli_num_rows($result) > 0)
 	{# process each row
         echo '
             <tr>            
-              <td><a href=""</a>'. dbOut($row['SubCategory']) . '</td>
+              <td><a href="' . VIRTUAL_PATH . 'feeds/feed.php?id=' . (int)$row['FeedID'] . '">'. dbOut($row['SubCategory']) . '
+              </a>
+              </td>
               <td>'. dbOut($row['Description']) . '</td>
             </tr>
         ';
