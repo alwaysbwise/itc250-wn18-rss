@@ -15,6 +15,9 @@
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
 spl_autoload_register('MyAutoLoader::NamespaceLoader');//required to load SurveySez namespace objects
 $config->metaRobots = 'no index, no follow';#never index feed pages
+#Fills <title> tag. If left empty will default to $PageTitle in config_inc.php  
+$config->titleTag = 'News Feed Sub-Categories';
+
 
 # check variable of item passed in - if invalid data, forcibly redirect back to feeds/index.php page
 if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystring
@@ -27,7 +30,7 @@ if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystri
 <h3 align="center">Sub-Categories</h3>
 <?php
 ////////////////////////////////////////////////////////////////////////
-$sql = "select * from wn18_RSS_Feeds where CategoryID=" . $myID;
+$sql = "select * from " . PREFIX . "RSS_Feeds where CategoryID=" . $myID;
 
 $prev = '<i class="fa fa-chevron-circle-left"></i>';
 $next = '<i class="fa fa-chevron-circle-right"></i>';

@@ -13,7 +13,7 @@
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
 spl_autoload_register('MyAutoLoader::NamespaceLoader');//required to load SurveySez namespace objects
 $config->metaRobots = 'no index, no follow';#never index feed pages
- 
+
 if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystring
 	 $myID = (int)$_GET['id']; #Convert to integer, will equate to zero if fails
 }else{
@@ -32,8 +32,7 @@ while($row = mysqli_fetch_assoc($result))
         $request = dbOut($row['Description']);
         // takes the contents of the xml file and loads them
         $response = file_get_contents($request);
-        $xml = simplexml_load_string($response);
-    
+        $xml = simplexml_load_string($response);    
         // display the title of the channel
         print '<h1>' . $xml->channel->title . '</h1>';
         

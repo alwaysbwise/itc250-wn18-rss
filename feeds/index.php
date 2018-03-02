@@ -21,7 +21,7 @@ require '../inc_0700/config_inc.php'; #provides configuration, pathing, error ha
 $sql= "select * from " . PREFIX . "RSS_Categories";
 
 #Fills <title> tag. If left empty will default to $PageTitle in config_inc.php  
-$config->titleTag = 'News Feeds made with love & PHP in Seattle';
+$config->titleTag = 'News Feed Categories';
 
 #Fills <meta> tags.  Currently we're adding to the existing meta tags in config_inc.php
 $config->metaDescription = 'Seattle Central\'s ITC250 Class News Feeds are made with pure PHP! ' . $config->metaDescription;
