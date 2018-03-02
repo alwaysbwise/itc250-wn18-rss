@@ -1,13 +1,15 @@
 <?php
 /**
  * feed_view.php is a page to display the subcategories from their
- * respective parents and link to specific RSS feeds
+ * respective parents and link to their RSS feeds
  * 
- * @package RSS Feeds
+ * @package wn18/feeds
  * @author Brian Wise <briandwise7@gmail.com> Ana, Ben, Sue
  * @version 0.1 2018/02/08
  * @link http://www.brianwise.xyz/wn18
  * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @see feed.php 
+ * @see Pager.php 
  */
  
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials

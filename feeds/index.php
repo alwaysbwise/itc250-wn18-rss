@@ -2,19 +2,16 @@
 /*
  * index.php is the first page of our News Aggregator app; it's based on
  * demo_list_pager.php along with demo_view_pager.php provides a sample web application
- *
- * The associated view page, demo_view_pager.php is virtually identical to demo_view.php. 
- * The only difference is the pager version links to the list pager version to create a 
- * separate application from the original list/view. 
  * 
- * @package RSS Feeds
+ * @package wn18/feeds
  * @author Brian Wise <briandwise7@gmail.com> Ana, Ben, Sue
  * @version 0.1 2018/02/08
  * @link http://www.brianwise.xyz/wn18
  * @license https://www.apache.org/licenses/LICENSE-2.0
  * @see feed_view.php
+ * @see feed.php 
  * @see Pager.php 
- * @todo plug RSS feeds into SQL calls
+ * @todo set up sessions
  */
 
 # '../' works for a sub-folder.  use './' for the root  
