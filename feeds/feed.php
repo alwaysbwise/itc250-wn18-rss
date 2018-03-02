@@ -40,8 +40,9 @@ while($row = mysqli_fetch_assoc($result))
         // process through the array of stories and display link+title+description
         foreach($xml->channel->item as $story)
           {
-            echo '<a href="' . $story->link . '">' . $story->title . '</a><br />'; 
-            echo '<p>' . $story->description . '</p><br /><br />';
+            echo '<h3>' . $story->title . '</h3>
+            <p>' . $story->pubDate . '<br />
+            <img src="' . $story->image . '">' . $story->description . '</p>';
           }
     
 	}
