@@ -1,9 +1,9 @@
 <?php
 /**
- * demo_add.php is a single page web application that allows us to add a new customer to 
+ * feed_add.php is a single page web application that allows us to add a new feeds to 
  * an existing table
  *
- * This page is based on demo_edit.php
+ * This page is based on feed_edit.php
  *
  * Any number of additional steps or processes can be added by adding keywords to the switch 
  * statement and identifying a hidden form field in the previous step's form:
@@ -16,9 +16,9 @@
  * unique identifier for the next step of a multi-step process
  *
  * @package nmCommon
- * @author Bill Newman <williamnewman@gmail.com>
+ * @author Ana <anarubia10@hotmail.com>, Brian, Ben, Sue.
  * @version 1.12 2012/02/27
- * @link http://www.newmanix.com/
+ * @link http://www.anacodes.com/
  * @license https://www.apache.org/licenses/LICENSE-2.0
  * @todo add more complicated checkbox & radio button examples
  */
@@ -34,96 +34,103 @@ if(isset($_REQUEST['act'])){$myAction = (trim($_REQUEST['act']));}else{$myAction
 
 switch ($myAction) 
 {//check 'act' for type of process
-	case "add": //2) Form for adding new customer data
-	 	addForm();
+	case "add": //2) Form for adding new feeds data
+	 	addFeed();
 	 	break;
-	case "insert": //3) Insert new customer data
+	case "insert": //3) Insert new feeds data
 		insertExecute();
 		break; 
-	default: //1)Show existing customers
+	default: //1)Show existing feeds
 	 	showFeeds();
 }
 
 function showFeeds()
-{//Select Customer
+{//Select Feed
 	global $config;
 	get_header();
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
 
-	$sql = "select FeedID,FirstName,LastName,Email from test_Customers";
+	$sql = "select FeedID,CategoryID,SubCategory,Description from wn18_RSS_Feeds";
 	$result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::conn()), E_USER_ERROR));
 	if (mysqli_num_rows($result) > 0)//at least one record!
 	{//show results
 		echo '<table align="center" border="1" style="border-collapse:collapse" cellpadding="3" cellspacing="3">';
 		echo '<tr>
-				<th>CustomerID</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
+				<th>FeedID</th>
+				<th>CategoryID</th>
+				<th>SubCategory</th>
+				<th>Description</th>
 			</tr>
 			';
 		while ($row = mysqli_fetch_assoc($result))
 		{//dbOut() function is a 'wrapper' designed to strip slashes, etc. of data leaving db
 			echo '<tr>
 					<td>'	
-				     . (int)$row['CustomerID'] . '</td>
-				    <td>' . dbOut($row['FirstName']) . '</td>
-				    <td>' . dbOut($row['LastName']) . '</td>
-				    <td>' . dbOut($row['Email']) . '</td>
+				     . (int)$row['FeedID'] . '</td>
+				    <td>' . dbOut($row['CategoryID']) . '</td>
+				    <td>' . dbOut($row['SubCategory']) . '</td>
+				    <td>' . dbOut($row['Description']) . '</td>
 				</tr>
 				';
 		}
 		echo '</table>';
 	}else{//no records
-      echo '<div align="center"><h3>Currently No Customers in Database.</h3></div>';
+      echo '<div align="center"><h3>Currently No Feeds in Database.</h3></div>';
 	}
-	echo '<div align="center"><a href="' . THIS_PAGE . '?act=add">ADD CUSTOMER</a></div>';
+	echo '<div align="center"><a href="' . THIS_PAGE . '?act=add">ADD FEED</a></div>';
 	@mysqli_free_result($result); //free resources
 	get_footer();
 }
 
-function addForm()
+function addFeed()
 {# shows details from a single customer, and preloads their first name in a form.
 	global $config;
 	$config->loadhead .= '
 	<script type="text/javascript" src="' . VIRTUAL_PATH . 'include/util.js"></script>
 	<script type="text/javascript">
-		function checkForm(thisForm)
-		{//check form data for valid info
-			if(empty(thisForm.FirstName,"Please Enter Customer\'s First Name")){return false;}
-			if(empty(thisForm.LastName,"Please Enter Customer\'s Last Name")){return false;}
-			if(!isEmail(thisForm.Email,"Please Enter a Valid Email")){return false;}
+		function checkFeed(thisFeed)
+		{//check feed data for valid info
+			if(empty(thisFeed.FeedID,"Please Enter Feed\'s FeedID")){return false;}
+			if(empty(thisFeed.CategoryID,"Please Enter Feed\'s CategoryID")){return false;}
+			if(empty(thisFeed.SubCategory,"Please Enter Feed\'s SubCategory")){return false;}
+			if(empty(thisFeed.Description,"Please Enter Feed\'s Description")){return false;}
 			return true;//if all is passed, submit!
 		}
 	</script>';
 	
 	get_header();
 	echo '<h3 align="center">' . smartTitle() . '</h3>
-	<h4 align="center">Add Customer</h4>
-	<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkForm(this);">
+	<h4 align="center">Add Feed</h4>
+	<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkFeed(this);">
 	<table align="center">
-	   <tr><td align="right">First Name</td>
+		<tr><td align="right">FeedID</td>
 		   	<td>
-		   		<input type="text" name="FirstName" />
-		   		<font color="red"><b>*</b></font> <em>(alphanumerics & punctuation)</em>
+		   		<input type="number" name="FeedID" />
+		   		<font color="red"><b>*</b></font> <em>(Number after the last Feed)</em>
 		   	</td>
 	   </tr>
-	   <tr><td align="right">Last Name</td>
+	   <tr><td align="right">CategoryID</td>
 		   	<td>
-		   		<input type="text" name="LastName" />
-		   		<font color="red"><b>*</b></font> <em>(alphanumerics & punctuation)</em>
+		   		<input type="number" name="CategoryID" />
+		   		<font color="red"><b>*</b></font> <em>(1-Technology, 2- Music, 3- Sports)</em>
 		   	</td>
 	   </tr>
-	   <tr><td align="right">Email</td>
+	   <tr><td align="right">SubCategory</td>
 		   	<td>
-		   		<input type="text" name="Email" />
-		   		<font color="red"><b>*</b></font> <em>(valid email only)</em>
+		   		<input type="text" name="SubCategory" />
+		   		<font color="red"><b>*</b></font> <em>(Technology, Music, or Sports)</em>
+		   	</td>
+	   </tr>
+	   <tr><td align="right">Description</td>
+		   	<td>
+		   		<input type="text" name="Description" />
+		   		<font color="red"><b>*</b></font> <em>(Feed RSS link)</em>
 		   	</td>
 	   </tr>
 	   <input type="hidden" name="act" value="insert" />
 	   <tr>
 	   		<td align="center" colspan="2">
-	   			<input type="submit" value="Add Customer!"><em>(<font color="red"><b>*</b> required field</font>)</em>
+	   			<input type="submit" value="Add Feed!"><em>(<font color="red"><b>*</b> required field</font>)</em>
 	   		</td>
 	   </tr>
 	</table>    
@@ -139,30 +146,32 @@ function insertExecute()
 	$iConn = IDB::conn();//must have DB as variable to pass to mysqli_real_escape() via iformReq()
 	
 	$redirect = THIS_PAGE; //global var used for following formReq redirection on failure
-
-	$FirstName = strip_tags(iformReq('FirstName',$iConn));
-	$LastName = strip_tags(iformReq('LastName',$iConn));
-	$Email = strip_tags(iformReq('Email',$iConn));
+	$FeedID = strip_tags(iformReq('FeedID',$iConn));
+	$CategoryID = strip_tags(iformReq('CategoryID',$iConn));
+	$SubCategory = strip_tags(iformReq('SubCategory',$iConn));
+	$Description = strip_tags(iformReq('Description',$iConn));
 	
 	//next check for specific issues with data
-	if(!ctype_graph($_POST['FirstName'])|| !ctype_graph($_POST['LastName']))
+	if(!ctype_graph($_POST['FeedID'])||
+	!ctype_graph($_POST['CategoryID'])|| !ctype_graph($_POST['SubCategory'])||
+	!ctype_graph($_POST['Description']))
 	{//data must be alphanumeric or punctuation only	
-		feedback("First and Last Name must contain letters, numbers or punctuation");
+		feedback("Something went wrong, try again.");
 		myRedirect(THIS_PAGE);
 	}
 	
-	
+	/*
 	if(!onlyEmail($_POST['Email']))
 	{//data must be alphanumeric or punctuation only	
 		feedback("Data entered for email is not valid");
 		myRedirect(THIS_PAGE);
-	}
+	}*/
 
     //build string for SQL insert with replacement vars, %s for string, %d for digits 
-    $sql = "INSERT INTO test_Customers (FirstName, LastName, Email) VALUES ('%s','%s','%s')"; 
+    $sql = "INSERT INTO wn18_RSS_Feeds (FeedID, CategoryID, SubCategory, Description) VALUES ('%s','%s','%s', '%s')"; 
 
     # sprintf() allows us to filter (parameterize) form data 
-	$sql = sprintf($sql,$FirstName,$LastName,$Email);
+	$sql = sprintf($sql,$FeedID,$CategoryID,$SubCategory,$Description);
 
 	@mysqli_query($iConn,$sql) or die(trigger_error(mysqli_error($iConn), E_USER_ERROR));
 	#feedback success or failure of update
