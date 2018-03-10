@@ -1,4 +1,5 @@
 <?php
+<?php session_start(); ?>
 /**
  * config_inc.php stores site-wide configuration settings, functions & file references
  * 

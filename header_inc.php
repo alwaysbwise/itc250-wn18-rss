@@ -1,4 +1,7 @@
 <?php
+
+<?php session_start(); ?>
+
 /**
  * header_inc.php provides the initial HTML and left panel for our site files 
  *
