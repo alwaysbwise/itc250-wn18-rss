@@ -50,7 +50,16 @@ function showFeeds()
 	get_header();
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
 
-	$sql = "select FeedID,CategoryID,SubCategory,Description from wn18_RSS_Feeds";
+	$feedId = mysqli_real_escape_string( $feedId, $_SESSION['FeedID']);
+	
+	$categoryId = mysqli_real_escape_string( $categoryId, $_SESSION['CategoryID']);
+	
+	$subCategory = mysqli_real_escape_string( $subCategory, $_SESSION['SubCategory']);
+	
+	$description = mysqli_real_escape_string( $description, $_SESSION['Description']);
+	
+	$sql = "select $feedId,$categoryId,$subCategory,$description from wn18_RSS_Feeds";
+	
 	$result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::conn()), E_USER_ERROR));
 	if (mysqli_num_rows($result) > 0)//at least one record!
 	{//show results
