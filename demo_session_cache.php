@@ -35,14 +35,9 @@ $ducks[] = new Duck('Huey', 'Fishing', 1.5);
 $ducks[] = new Duck('Dewey', 'Camping', .75);
 $ducks[] = new Duck('Louie', 'Flying', .25);
 
-foreach($ducks as $duck)
-{
-    echo '<p>' . $duck . '</p>';
-}
+foreach($ducks as $duck){    echo '<p>' . $duck . '</p>';}
 die;
 */
-
-//END CONFIG AREA ----------------------------------------------------------
 
 # Read the value of 'action' whether it is passed via $_POST or $_GET with $_REQUEST
 if(isset($_REQUEST['act'])){$myAction = (trim($_REQUEST['act']));}else{$myAction = "";}
@@ -130,13 +125,13 @@ function showDucks()
     dumpDie($_SESSION['Ducks']);
     
     
-	if(!isset($_POST['Name']) || $_POST['Name'] == '')
+	if(!isset($_POST['YourName']) || $_POST['YourName'] == '')
 	{//data must be sent	
 		feedback("No form data submitted"); #will feedback to submitting page via session variable
 		myRedirect(THIS_PAGE);
 	}  
 	
-	if(!ctype_alnum($_POST['Name']))
+	if(!ctype_alnum($_POST['YourName']))
 	{//data must be alphanumeric only	
 		feedback("Only letters and numbers are allowed.  Please re-enter your name."); #will feedback to submitting page via session variable
 		myRedirect(THIS_PAGE);
@@ -145,15 +140,15 @@ function showDucks()
 	$myName = strip_tags($_POST['YourName']);# here's where we can strip out unwanted data
 	
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
-	echo '<p align="center">Your duck name is <b>' . $myName . '</b>!</p>';
+	echo '<p align="center">Your name is <b>' . $myName . '</b>!</p>';
 	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
 	get_footer(); #defaults to footer_inc.php
 }
 
-class Feed
+class Duck
 {
     public $Name = '';
-    public $Description = '';
+    public $Hobby = '';
     public $Allowance = 0;
     
     public function __construct($Name, $Hobby, $Allowance)
@@ -162,7 +157,7 @@ class Feed
         $this->Hobby = $Hobby;
         $this->Allowance = $Allowance;
         
-    }//end Feed constructor
+    }//end Duck constructor
 
     public function __toString()
     {
@@ -178,7 +173,7 @@ class Feed
 
     }//end toString function
 
-}//end feed class
+}//end duck class
 
 
 
