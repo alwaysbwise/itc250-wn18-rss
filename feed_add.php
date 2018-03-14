@@ -183,4 +183,3 @@ function insertExecute()
 	}
 	myRedirect(THIS_PAGE);
 }
-

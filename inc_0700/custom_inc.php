@@ -1,27 +1,45 @@
-<?
+<?php
 /**
- * feed.php is a page to display the sub-categories' RSS feeds
+ * custom_inc.php stores custom functions specific to your application
  * 
- * @package wn18/feeds
- * @author Brian Wise <briandwise7@gmail.com> Ana, Ben, Sue
- * @version 0.1 2018/02/08
- * @link http://www.brianwise.xyz/wn18
- * @license http://www.apache.org/licenses/LICENSE-2.0
- * @see feed_view.php
+ * Keeping common_inc.php clear of your functions allows you to upgrade without conflict
+ * 
+ * @package nmCommon
+ * @author Bill Newman <williamnewman@gmail.com>
+ * @version 2.091 2011/06/17
+ * @link http://www.newmanix.com/  
+ * @license https://www.apache.org/licenses/LICENSE-2.0
+ * @todo add safeEmail to common_inc.php
  */
-//our simplest example of consuming an RSS feed
-require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
-spl_autoload_register('MyAutoLoader::NamespaceLoader');//required to load SurveySez namespace objects
-$config->metaRobots = 'no index, no follow';#never index feed pages
+ 
+/**
+ * Place your custom functions below so you can upgrade common_inc.php without trashing 
+ * your custom functions.
+ *
+ * An example function is commented out below as a documentation example  
+ *
+ * View common_inc.php for many more examples of documentation and starting 
+ * points for building your own functions!
+ */ 
 
-//if the id is set on the querystring, display, else - redirect
-if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystring
-    
-    showFeeds();
-    
-}else{
-	myRedirect(VIRTUAL_PATH . "feeds/feed_view.php");
-}
+/**
+ * Checks data for alphanumeric characters using PHP regular expression.  
+ *
+ * Returns true if matches pattern.  Returns false if it doesn't.   
+ * It's advised not to trust any user data that fails this test.
+ *
+ * @param string $str data as entered by user
+ * @return boolean returns true if matches pattern.
+ * @todo none
+ */
+
+/* 
+function onlyAlphaEXAMPLE($myString)
+{
+  if(preg_match("/[^a-zA-Z]/",$myString))
+  {return false;}else{return true;} //opposite logic from email?  
+}#end onlyAlpha() 
+
 
 
 function showFeeds()
@@ -49,7 +67,7 @@ function showFeeds()
         //dumpDie($_SESSION['Feeds']);
         //^currently returns an array of objects 
         } 
-    @mysqli_free_result($result);// end sql call
+    mysqli_free_result($result);// end sql call
                                    
     }else if(isset($_SESSION['Feeds'])){
         
@@ -58,7 +76,7 @@ function showFeeds()
             // displays the XML from the SESSION cache not db 
             $FeedID = $Feed->myID;
             $TimeStamp = $Feed->TimeDate;
-            // add TimeDate compare here
+            
                 if ($FeedID == $myID){
                 $request = $Feed->Description;
                 }//end if IDs match
@@ -71,11 +89,12 @@ function showFeeds()
 
                         //populate the object array with a new instance of Feed class
                         $_SESSION['Feeds'][] = new Feed($myID, $request, $TimeDate);     
+
+
                     }//end while db loop 
-                     
+                     mysqli_free_result($result);// end sql call
                 }//end else            
             }//end foreach
-            @mysqli_free_result($result);// end sql call
         }//end elseif isset
     
 // takes the contents of the xml file and loads them
@@ -107,6 +126,4 @@ class Feed
         $this->TimeDate = $TimeDate;
         
     }//end Feed constructor
-
 }//end feed class
-?>
