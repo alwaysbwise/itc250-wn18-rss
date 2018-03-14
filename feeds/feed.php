@@ -29,7 +29,7 @@ function showFeeds()
     startSession();
     // begin sql call to process rss feed
     $myID = (int)$_GET['id']; #Convert to integer, will equate to zero if fails
-    $sql = "select Description from wn18_RSS_Feeds where FeedID=" . $myID;
+    $sql = "select FeedXML from wn18_RSS_Feeds where FeedID=" . $myID;
     # connection comes first in mysqli (improved) function
     $result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::conn()), E_USER_ERROR));
 
@@ -38,7 +38,7 @@ function showFeeds()
     while($row = mysqli_fetch_assoc($result)){# process SQL
 
         // pulls the RSS feed link if not cached
-        $request = dbOut($row['Description']);
+        $request = dbOut($row['FeedXML']);
 
         $TimeDate = date("Y-m-d H:i:s"); 
         
@@ -66,7 +66,7 @@ function showFeeds()
                     while($row = mysqli_fetch_assoc($result)){# process SQL
 
                         // pulls the RSS feed link if not cached
-                        $request = dbOut($row['Description']);
+                        $request = dbOut($row['FeedXML']);
                         $TimeDate = date("Y-m-d H:i:s");
 
                         //populate the object array with a new instance of Feed class
