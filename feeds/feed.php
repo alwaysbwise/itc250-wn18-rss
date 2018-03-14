@@ -33,20 +33,17 @@ function showFeeds()
 $result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::conn()), E_USER_ERROR));
     
     
-    if(!isset($_SESSION['Feeds'])){$_SESSION['Feeds'] = array();}
-    
-
-    
-    while($row = mysqli_fetch_assoc($result)){# process SQL
+    if(!isset($_SESSION['Feeds'])){$_SESSION['Feeds'] = array();
+                                  
+                                 while($row = mysqli_fetch_assoc($result)){# process SQL
 
             // pulls the RSS feed link if not cached
             $request = dbOut($row['Description']);
         
             //no checks- verify data in the fields 
-            $_SESSION['Feeds'][] = new Feed($myID, $request);
+            $_SESSION['Feeds'][] = new Feed($myID, $request);     
     
-    dumpDie($_SESSION['Feeds'][1]);
- 
+            dumpDie($_SESSION['Feeds']);
         
             // takes the contents of the xml file and loads them
             $response = file_get_contents($request);
@@ -64,7 +61,25 @@ $result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::
 
     }
 @mysqli_free_result($result);// end sql call and xml reader
- 
+                                  }
+    /*else if (isset($_SESSION['Feeds'] && )){            
+            $_SESSION['Feeds'][] = new Feed($myID, $)
+            $feed[] = $_SESSION['Feeds'][$myID];
+            dumpDie($_SESSION['Feeds']);
+            //$request = ;
+            // takes the contents of the xml file and loads them
+            $response = file_get_contents($request);
+            $xml = simplexml_load_string($response);    
+            // display the title of the channel
+            print '<h1>' . $xml->channel->title . '</h1>';
+
+            // process through the array of stories and display link+title+description
+            foreach($xml->channel->item as $story)
+              {
+                echo '<h3>' . $story->title . '</h3>
+                <p>' . $story->pubDate . '<br />
+                <img src="' . $story->image . '">' . $story->description . '</p>';
+              }}*/
 }//end showFeeds()
 
 class Feed
