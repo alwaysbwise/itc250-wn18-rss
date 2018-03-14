@@ -22,12 +22,16 @@
  * @license https://www.apache.org/licenses/LICENSE-2.0
  * @todo add more complicated checkbox & radio button examples
  */
+
 # '../' works for a sub-folder.  use './' for the root  
 require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
  
+
 //END CONFIG AREA ----------------------------------------------------------
+
 # Read the value of 'action' whether it is passed via $_POST or $_GET with $_REQUEST
 if(isset($_REQUEST['act'])){$myAction = (trim($_REQUEST['act']));}else{$myAction = "";}
+
 switch ($myAction) 
 {//check 'act' for type of process
 	case "add": //2) Form for adding new feeds data
@@ -39,11 +43,13 @@ switch ($myAction)
 	default: //1)Show existing feeds
 	 	showFeeds();
 }
+
 function showFeeds()
 {//Select Feed
 	global $config;
 	get_header();
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
+
 	$sql = "select FeedID,CategoryID,SubCategory,Description from wn18_RSS_Feeds";
 	$result = mysqli_query(IDB::conn(),$sql) or die(trigger_error(mysqli_error(IDB::conn()), E_USER_ERROR));
 	if (mysqli_num_rows($result) > 0)//at least one record!
@@ -75,6 +81,7 @@ function showFeeds()
 	@mysqli_free_result($result); //free resources
 	get_footer();
 }
+
 function addFeed()
 {# shows details from a single customer, and preloads their first name in a form.
 	global $config;
@@ -133,6 +140,7 @@ function addFeed()
 	get_footer();
 	
 }
+
 function insertExecute()
 {
 	$iConn = IDB::conn();//must have DB as variable to pass to mysqli_real_escape() via iformReq()
@@ -158,10 +166,13 @@ function insertExecute()
 		feedback("Data entered for email is not valid");
 		myRedirect(THIS_PAGE);
 	}*/
+
     //build string for SQL insert with replacement vars, %s for string, %d for digits 
     $sql = "INSERT INTO wn18_RSS_Feeds (FeedID, CategoryID, SubCategory, Description) VALUES ('%s','%s','%s', '%s')"; 
+
     # sprintf() allows us to filter (parameterize) form data 
 	$sql = sprintf($sql,$FeedID,$CategoryID,$SubCategory,$Description);
+
 	@mysqli_query($iConn,$sql) or die(trigger_error(mysqli_error($iConn), E_USER_ERROR));
 	#feedback success or failure of update
 	if (mysqli_affected_rows($iConn) > 0)
