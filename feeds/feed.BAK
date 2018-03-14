@@ -14,6 +14,8 @@ require '../inc_0700/config_inc.php'; #provides configuration, pathing, error ha
 spl_autoload_register('MyAutoLoader::NamespaceLoader');//required to load SurveySez namespace objects
 $config->metaRobots = 'no index, no follow';#never index feed pages
 
+session_start();
+
 if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystring
 	 $myID = (int)$_GET['id']; #Convert to integer, will equate to zero if fails
 }else{
@@ -48,4 +50,35 @@ while($row = mysqli_fetch_assoc($result))
 
 @mysqli_free_result($result);
 
-?>
+
+
+//////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\////////
+
+
+class Feed
+{
+    public $myID = '';
+    public $Data = '';
+    public $TimeDate = 0;
+    
+    public function __construct($myID, $Data, $TimeDate)
+    {
+        $this->myID = $myID;
+        $this->Data = $Data;
+        $this->TimeDate = $TimeDate;
+        
+    }//end Feed constructor
+
+    //dont think this is necessary
+    public function __toString()
+    {
+        $myReturn = '';
+        $myReturn .= 'Name: ' . $this->Name . ' ';
+        $myReturn .= 'Hobby: ' . $this->Hobby . ' ';
+        $myReturn .= 'Allowance: ' . $Allowance . ' ';
+
+        return $myReturn;
+
+    }//end toString function
+
+}//end feed class
