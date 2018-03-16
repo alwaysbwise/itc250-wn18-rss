@@ -27,6 +27,35 @@ if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystri
 function showFeeds()
 {
     startSession();
+	//Expire the session if user is inactive for 2
+	//minutes or more.
+	$expireAfter = 2;
+ 
+	//Check to see if our "last action" session
+	//variable has been set.
+	if(isset($_SESSION['last_action'])){
+    
+    //Figure out how many seconds have passed
+    //since the user was last active.
+    $secondsInactive = time() - $_SESSION['last_action'];
+    
+    //Convert our minutes into seconds.
+    $expireAfterSeconds = $expireAfter * 60;
+    
+    //Check to see if they have been inactive for too long.
+    if($secondsInactive >= $expireAfterSeconds){
+        //User has been inactive for too long.
+        //Kill their session.
+        session_unset();
+        session_destroy();
+    }
+    
+}
+ 
+	//Assign the current timestamp as the user's
+	//latest activity
+	$_SESSION['last_action'] = time();
+	
     // begin sql call to process rss feed
     $myID = (int)$_GET['id']; #Convert to integer, will equate to zero if fails
     $sql = "select FeedXML from wn18_RSS_Feeds where FeedID=" . $myID;
