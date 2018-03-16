@@ -33,11 +33,11 @@ function showFeeds()
  
 	//Check to see if our "last action" session
 	//variable has been set.
-	if(isset($_SESSION['last_action'])){
+	if(isset($_SESSION['FeedXML'])){
     
     //Figure out how many seconds have passed
     //since the user was last active.
-    $secondsInactive = time() - $_SESSION['last_action'];
+    $secondsInactive = time() - $_SESSION['FeedXML'];
     
     //Convert our minutes into seconds.
     $expireAfterSeconds = $expireAfter * 60;
@@ -48,13 +48,11 @@ function showFeeds()
         //Kill their session.
         session_unset();
         session_destroy();
-    }
-    
-}
- 
+    	}   
+	}
 	//Assign the current timestamp as the user's
 	//latest activity
-	$_SESSION['last_action'] = time();
+	$_SESSION['FeedXML'] = time();
 	
     // begin sql call to process rss feed
     $myID = (int)$_GET['id']; #Convert to integer, will equate to zero if fails
@@ -80,7 +78,7 @@ function showFeeds()
         } 
     @mysqli_free_result($result);// end sql call
                                    
-    }else if(isset($_SESSION['Feeds'])){
+ }else if(isset($_SESSION['Feeds'])){
         
         foreach($_SESSION['Feeds'] as $Feed){
             //foreach processes the array of Feed objects and if the FeedID matches the ID stored in a session
@@ -119,8 +117,7 @@ foreach($xml->channel->item as $story)
     echo '<h3>' . $story->title . '</h3>
     <p>' . $story->pubDate . '<br />
     <img src="' . $story->image . '">' . $story->description . '</p>';
-  }  
-    
+  }     
 }//end showFeeds()
 
 class Feed
