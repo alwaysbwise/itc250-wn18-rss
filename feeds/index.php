@@ -85,5 +85,11 @@ if(mysqli_num_rows($result) > 0)
 }
 @mysqli_free_result($result);
 
+
+	echo"
+		<br />
+		<h4> Want to add new feed to the database? Use this <a href='feed_add.php'>link</a></h4>";
+	
+
 get_footer(); #defaults to theme footer or footer_inc.php
 ?>
