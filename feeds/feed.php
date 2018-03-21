@@ -40,13 +40,14 @@ function showFeeds()
         // pulls the RSS feed link if not cached
         $request = dbOut($row['FeedXML']);
 
-        $TimeDate = date("Y-m-d H:i:s"); 
+        // $TimeDate = date("Y-m-d H:i:s"); 
+        $TimeDate = time(); 
         
         //populate the object array with a new instance of Feed class
         $_SESSION['Feeds'][] = new Feed($myID, $request, $TimeDate);     
 
         
-        //dumpDie($_SESSION['Feeds']);
+        //dumpDie($_SESSION['Feeds'][0][2]);
         //^currently returns an array of objects 
         } 
     @mysqli_free_result($result);// end sql call
@@ -70,7 +71,8 @@ function showFeeds()
                         $TimeDate = date("Y-m-d H:i:s");
 
                         //populate the object array with a new instance of Feed class
-                        $_SESSION['Feeds'][] = new Feed($myID, $request, $TimeDate);     
+                        $_SESSION['Feeds'][] = new Feed($myID, $request, $TimeDate);   
+                        
                     }//end while db loop 
                      
                 }//end else            
